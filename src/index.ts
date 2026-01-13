@@ -11,24 +11,1319 @@ const app = express()
 app.get('/', (req, res) => {
   res.type('html').send(`
     <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8"/>
-        <title>Express on Vercel</title>
-        <link rel="stylesheet" href="/style.css" />
-      </head>
-      <body>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/api-data">API Data</a>
-          <a href="/healthz">Health</a>
-        </nav>
-        <h1>Welcome to Express on Vercel 🚀</h1>
-        <p>This is a minimal example without a database or forms.</p>
-        <img src="/logo.png" alt="Logo" width="120" />
-      </body>
-    </html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EchoMinds - Mental Health Support Without Barriers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;family=Crimson+Pro:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      scroll-behavior: smooth;
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #0277BD 0%, #4FC3F7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-pattern {
+      background-image: radial-gradient(circle at 20% 80%, rgba(2, 119, 189, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(79, 195, 247, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(2, 136, 209, 0.05) 0%, transparent 40%);
+    }
+    .section-fade {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10B981;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .sponsor-logo {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+    .sponsor-logo:hover {
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-white">
+  <div id="app-wrapper" class="h-full w-full overflow-auto"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16 md:h-20"><!-- Logo --> <a href="#home" class="flex items-center gap-2 group">
+       <div class="w-10 h-10 rounded-xl flex items-center justify-center">
+        <svg class="w-10 h-10" viewbox="0 0 100 100" fill="none"><path d="M30 50 Q30 25 50 25 Q70 25 70 50 L70 70 Q70 75 65 75 L35 75 Q30 75 30 70 Z" fill="#0277BD" /> <circle cx="50" cy="40" r="8" stroke="#4FC3F7" stroke-width="2" fill="none" opacity="0.8" /> <circle cx="50" cy="40" r="14" stroke="#4FC3F7" stroke-width="1.5" fill="none" opacity="0.5" /> <circle cx="50" cy="40" r="20" stroke="#4FC3F7" stroke-width="1" fill="none" opacity="0.3" />
+        </svg>
+       </div><span class="text-xl font-semibold text-slate-800 tracking-tight" style="font-family: 'Outfit', sans-serif;">Echo<span class="text-blue-600">Minds</span></span> </a> <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-3 lg:gap-4"><a href="#home" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Home</a> <a href="#echobridge" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Programs</a> <a href="#about" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">About</a> <a href="#services" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Services</a> <a href="#resources" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Guides</a> <a href="#events" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Events</a> <a href="#sponsors" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Sponsors</a> <a href="#donate" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Support Us</a> <a href="#contact" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-xs transition-colors" style="font-family: 'Outfit', sans-serif;">Contact</a>
+      </div><!-- Right Actions -->
+      <div class="flex items-center gap-3"><!-- Exit Site Button --> <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="bg-red-500 hover:bg-red-600 text-white text-xs md:text-sm font-semibold px-3 md:px-4 py-2 rounded-lg transition-all shadow-lg shadow-red-500/20 hover:shadow-red-500/40" style="font-family: 'Outfit', sans-serif;"> Exit Site </a> <!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg></button>
+      </div>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+     <div class="px-4 py-4 space-y-2"><a href="#home" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Home</a> <a href="#echobridge" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Programs</a> <a href="#about" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">About</a> <a href="#services" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Services</a> <a href="#resources" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Guides</a> <a href="#events" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Events</a> <a href="#sponsors" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Sponsors</a> <a href="#donate" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Support Us</a> <a href="#contact" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Contact</a>
+     </div>
+    </div>
+   </nav><!-- ==================== HOME SECTION ==================== -->
+   <section id="home" class="pt-20 md:pt-24">
+    <div class="hero-pattern min-h-[90%] flex items-center">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+       <div class="section-fade">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6" style="font-family: 'Outfit', sans-serif;"><span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span> Supporting Immigrant Mental Health
+        </div>
+        <h1 id="hero-headline" class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-700 leading-tight mb-6" style="font-family: 'Outfit', sans-serif;">Mental Health Support <span class="gradient-text">Without Barriers.</span></h1>
+        <p id="hero-subtext" class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8" style="font-family: 'Crimson Pro', serif;">EchoMinds provides bilingual resources, peer advocacy, and safe spaces for immigrant families navigating life in a new country.</p>
+        <div class="flex flex-wrap gap-4"><a href="#echobridge" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:-translate-y-0.5" style="font-family: 'Outfit', sans-serif;"> EchoBridge Program 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg></a> <a href="#about" class="inline-flex items-center gap-2 border-2 border-slate-300 hover:border-blue-500 text-slate-700 hover:text-blue-600 font-semibold px-6 py-3.5 rounded-xl transition-all hover:-translate-y-0.5" style="font-family: 'Outfit', sans-serif;"> Our Mission </a>
+        </div>
+       </div>
+       <div class="relative section-fade float-animation" style="animation-delay: 0.2s;">
+        <svg viewbox="0 0 400 400" class="w-full max-w-md mx-auto"><circle cx="200" cy="200" r="180" fill="url(#grad1)" opacity="0.1" /> <circle cx="200" cy="200" r="140" fill="url(#grad1)" opacity="0.15" /> <circle cx="200" cy="200" r="100" fill="url(#grad1)" opacity="0.2" /> <g transform="translate(120, 150)">
+          <circle cx="40" cy="30" r="25" fill="#0277BD" />
+          <ellipse cx="40" cy="90" rx="30" ry="40" fill="#0277BD" />
+          <circle cx="120" cy="35" r="28" fill="#4FC3F7" />
+          <ellipse cx="120" cy="100" rx="32" ry="45" fill="#4FC3F7" />
+          <path d="M65 60 Q90 40 95 60" stroke="#0288D1" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+          <path d="M70 90 Q90 80 95 90" stroke="#0288D1" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+         </g> <g fill="#F43F5E" opacity="0.8">
+          <path transform="translate(280, 100) scale(0.8)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          <path transform="translate(100, 80) scale(0.5)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+         </g> <defs>
+          <lineargradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#0277BD;stop-opacity:1" />
+           <stop offset="100%" style="stop-color:#4FC3F7;stop-opacity:1" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== ECHOBRIDGE PROGRAM SECTION ==================== -->
+   <section id="echobridge" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Flagship Program</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">The EchoBridge Program</h2>
+      <p id="program-description" class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Crimson Pro', serif;">A family-centered mental health program that guides immigrant teens and parents through their first mental health conversation using culturally adapted, multilingual tools.</p>
+     </div><!-- Program Phases -->
+     <div class="grid md:grid-cols-3 gap-8 mb-16"><!-- Phase 1 -->
+      <div class="card-hover bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border-2 border-blue-100 section-fade relative">
+       <div class="flex items-center justify-between mb-6">
+        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-xl" style="font-family: 'Outfit', sans-serif;">
+         1
+        </div><span class="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full" style="font-family: 'Outfit', sans-serif;">PREP</span>
+       </div>
+       <h3 class="text-xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Student Prep</h3>
+       <ul class="space-y-3 text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Workshop on cultural framing and stigma reduction</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Conversation scripts in multiple languages</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Role-play practice and peer support</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Take-home materials and resources</span></li>
+       </ul>
+      </div><!-- Phase 2 -->
+      <div class="card-hover bg-gradient-to-br from-sky-50 to-white rounded-2xl p-8 border-2 border-sky-100 section-fade relative" style="animation-delay: 0.1s;">
+       <div class="flex items-center justify-between mb-6">
+        <div class="w-12 h-12 bg-sky-600 text-white rounded-xl flex items-center justify-center font-bold text-xl" style="font-family: 'Outfit', sans-serif;">
+         2
+        </div><span class="text-xs font-semibold text-sky-600 bg-sky-50 px-3 py-1 rounded-full" style="font-family: 'Outfit', sans-serif;">BRIDGE</span>
+       </div>
+       <h3 class="text-xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Parent Bridge Kit</h3>
+       <ul class="space-y-3 text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-sky-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Short guide for parents in EN, ES, ZH, VI</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-sky-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Real-world examples from other families</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-sky-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Culturally sensitive language frameworks</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-sky-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>FAQ section addressing common concerns</span></li>
+       </ul>
+      </div><!-- Phase 3 -->
+      <div class="card-hover bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-8 border-2 border-indigo-100 section-fade" style="animation-delay: 0.2s;">
+       <div class="flex items-center justify-between mb-6">
+        <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold text-xl" style="font-family: 'Outfit', sans-serif;">
+         3
+        </div><span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full" style="font-family: 'Outfit', sans-serif;">CONNECT</span>
+       </div>
+       <h3 class="text-xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Guided Conversation Night</h3>
+       <ul class="space-y-3 text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Step-by-step conversation flow guide</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Optional trained facilitator present</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Reflection form for both participants</span></li>
+        <li class="flex items-start gap-2">
+         <svg class="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+         </svg><span>Follow-up resources and next steps</span></li>
+       </ul>
+      </div>
+     </div><!-- Program Metrics PLACEHOLDERS -->
+     <div class="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-8 md:p-12 section-fade">
+      <h3 class="text-2xl font-bold text-slate-800 text-center mb-8" style="font-family: 'Outfit', sans-serif;">EchoBridge Impact (Coming Soon)</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+       <div class="text-center">
+        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+         <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+         </svg>
+        </div>
+        <div class="text-3xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">
+         X
+        </div>
+        <p class="text-slate-600 text-sm" style="font-family: 'Crimson Pro', serif;">Families completed EchoBridge program</p>
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+         <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <div class="text-3xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">
+         Y%
+        </div>
+        <p class="text-slate-600 text-sm" style="font-family: 'Crimson Pro', serif;">Reported improved parent-child understanding</p>
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+         <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+         </svg>
+        </div>
+        <div class="text-3xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">
+         Z
+        </div>
+        <p class="text-slate-600 text-sm" style="font-family: 'Crimson Pro', serif;">Languages used in family conversations</p>
+       </div>
+      </div>
+      <p class="text-center text-sm text-slate-500 mt-6" style="font-family: 'Crimson Pro', serif;">Tracking and surveys are being implemented to measure program impact accurately.</p>
+     </div><!-- Sliding Scale Donation for EchoBridge -->
+     <div class="mt-12 bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border-2 border-blue-100 section-fade">
+      <h3 class="text-2xl font-bold text-slate-800 mb-4 text-center" style="font-family: 'Outfit', sans-serif;">Support EchoBridge Program</h3>
+      <p class="text-center text-slate-600 mb-6 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">EchoBridge remains free for all families. If you're able to contribute, your sliding-scale donation helps us expand to more languages and communities.</p>
+      <div class="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto"><button class="echobridge-amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="15" style="font-family: 'Outfit', sans-serif;">$15</button> <button class="echobridge-amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="30" style="font-family: 'Outfit', sans-serif;">$30</button> <button class="echobridge-amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="50" style="font-family: 'Outfit', sans-serif;">$50</button>
+      </div>
+      <div class="max-w-md mx-auto mt-4"><input type="number" id="echobridge-custom-amount" min="1" placeholder="Or enter custom amount" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-center focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+      </div>
+      <div class="text-center mt-4"><button id="echobridge-donate-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition-all shadow-lg" style="font-family: 'Outfit', sans-serif;">Contribute to EchoBridge</button>
+      </div>
+     </div><!-- Join EchoBridge CTA -->
+     <div class="mt-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 text-center text-white section-fade">
+      <div class="max-w-2xl mx-auto">
+       <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-4xl">🌉</span>
+       </div>
+       <h3 class="text-2xl md:text-3xl font-bold mb-3" style="font-family: 'Outfit', sans-serif;">Ready to Start Your Family Conversation?</h3>
+       <p class="text-lg mb-6 opacity-95" style="font-family: 'Crimson Pro', serif;">The EchoBridge Program guides you through your first mental health conversation with your family—step by step, in your language.</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center"><button class="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl" style="font-family: 'Outfit', sans-serif;"> Join EchoBridge Program </button> <a href="#events" class="inline-flex items-center justify-center gap-2 border-2 border-white/40 hover:border-white text-white hover:bg-white/10 font-semibold px-8 py-3.5 rounded-xl transition-all" style="font-family: 'Outfit', sans-serif;"> <span>Explore Events First</span>
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+         </svg></a>
+       </div>
+      </div>
+     </div><!-- Connection to Events -->
+     <div class="mt-8 bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl section-fade">
+      <div class="flex items-start gap-3">
+       <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg>
+       <div>
+        <h4 class="font-semibold text-blue-900 mb-1" style="font-family: 'Outfit', sans-serif;">Building Trust Through Events</h4>
+        <p class="text-blue-800 text-sm" style="font-family: 'Crimson Pro', serif;">Our art therapy sessions, mindfulness workshops, and peer support circles help build trust and awareness before families enter the EchoBridge Program. These events create safe spaces for initial conversations about mental health.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== ABOUT/TEAM SECTION ==================== -->
+   <section id="about" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><!-- Mission Statement -->
+     <div class="max-w-3xl mx-auto text-center mb-20 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Our Story</span>
+      <h2 id="mission-title" class="text-3xl md:text-4xl font-bold text-slate-800 mb-6" style="font-family: 'Outfit', sans-serif;">Why We Started EchoMinds</h2>
+      <p class="text-lg text-slate-600 leading-relaxed" style="font-family: 'Crimson Pro', serif;">We realized that while mental health struggles are universal, the resources to treat them are often stuck behind language barriers and cultural stigma. Too many immigrant families suffer in silence—not because help doesn't exist, but because it doesn't speak their language. <strong>We bridge that gap.</strong></p>
+     </div><!-- Student Leadership Team -->
+     <div class="mb-20 section-fade">
+      <h3 class="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-4" style="font-family: 'Outfit', sans-serif;">Student Leadership Team</h3>
+      <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Led entirely by students who recruit volunteers, delegate tasks, manage operations, and oversee everything from translation to outreach to school partnerships.</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Founder -->
+       <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm">
+        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-bold text-white" style="font-family: 'Outfit', sans-serif;">AK</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Ayush Kar</h4>
+        <p class="text-sm text-blue-600 font-medium mb-2" style="font-family: 'Outfit', sans-serif;">Co-Founder &amp; Executive Head</p>
+        <p class="text-xs text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Manages overall strategy, operations, fundraising, events, recruitment, and program leadership.</p>
+       </div><!-- Outreach Lead -->
+       <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm">
+        <div class="w-20 h-20 bg-gradient-to-br from-rose-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-bold text-white" style="font-family: 'Outfit', sans-serif;">AS</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Aryaman Subramanian</h4>
+        <p class="text-sm text-blue-600 font-medium mb-2" style="font-family: 'Outfit', sans-serif;">Co-Founder &amp; Media Director</p>
+        <p class="text-xs text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Leads social media, content, engagement, fundraising, program leader; supports operations.</p>
+       </div><!-- Translation Lead -->
+       <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm">
+        <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-bold text-white" style="font-family: 'Outfit', sans-serif;">TN</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Trang Nguyen</h4>
+        <p class="text-sm text-blue-600 font-medium mb-2" style="font-family: 'Outfit', sans-serif;">Translation Lead</p>
+        <p class="text-xs text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Coordinates multilingual content creation, manages translator team, ensures cultural accuracy</p>
+       </div><!-- School Partnerships Lead -->
+       <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm">
+        <div class="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-bold text-white" style="font-family: 'Outfit', sans-serif;">AP</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Alex Patel</h4>
+        <p class="text-sm text-blue-600 font-medium mb-2" style="font-family: 'Outfit', sans-serif;">School Partnerships Lead</p>
+        <p class="text-xs text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Builds relationships with schools and counseling centers, organizes on-campus programs</p>
+       </div>
+      </div>
+     </div><!-- Challenges & Resilience -->
+     <div class="mb-20 section-fade">
+      <h3 class="text-2xl font-bold text-slate-800 text-center mb-4" style="font-family: 'Outfit', sans-serif;">Overcoming Challenges</h3>
+      <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Building EchoMinds wasn't easy. Here's how our student leadership team tackled major obstacles:</p>
+      <div class="grid md:grid-cols-3 gap-6"><!-- Challenge 1 -->
+       <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+         <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+         </svg>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Cultural Stigma</h4>
+        <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;"><strong>Challenge:</strong> Many immigrant families view mental health as taboo.</p>
+        <p class="text-sm text-emerald-700" style="font-family: 'Crimson Pro', serif;"><strong>Solution:</strong> Reframed messaging as "family wellness" and used culturally familiar metaphors in all materials. Partnered with trusted community leaders for endorsements.</p>
+       </div><!-- Challenge 2 -->
+       <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
+         <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+         </svg>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Parent Trust</h4>
+        <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;"><strong>Challenge:</strong> Parents hesitant to attend programs run by students.</p>
+        <p class="text-sm text-emerald-700" style="font-family: 'Crimson Pro', serif;"><strong>Solution:</strong> Partnered with school counselors and community health centers for official backing. Invited parents to initial events to observe before committing.</p>
+       </div><!-- Challenge 3 -->
+       <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+         </svg>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Translation Accuracy</h4>
+        <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;"><strong>Challenge:</strong> Mental health terms don't always translate directly or culturally.</p>
+        <p class="text-sm text-emerald-700" style="font-family: 'Crimson Pro', serif;"><strong>Solution:</strong> Built a review team of native speakers and consulted cultural experts. Tested materials with focus groups before publishing.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== SERVICES SECTION ==================== -->
+   <section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">What We Offer</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">All Services &amp; Programs</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Everything we offer to support immigrant families on their mental health journey.</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8"><!-- EchoBridge Program -->
+      <div class="card-hover bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border-2 border-blue-100 section-fade">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">EchoBridge Program</h3>
+         <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">3-phase family program guiding first mental health conversations</p>
+        </div>
+       </div>
+       <div class="space-y-2 text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <p>• Student prep workshops</p>
+        <p>• Parent bridge kits (EN, ES, ZH, VI)</p>
+        <p>• Guided conversation nights</p>
+       </div><a href="#echobridge" class="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">Learn More →</a>
+      </div><!-- Multilingual Guides -->
+      <div class="card-hover bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border-2 border-emerald-100 section-fade">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Multilingual Guides</h3>
+         <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">Free downloadable resources in multiple languages</p>
+        </div>
+       </div>
+       <div class="space-y-2 text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <p>• Parent talk scripts</p>
+        <p>• Cultural framing guides</p>
+        <p>• Local resource directories</p>
+       </div><a href="#resources" class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">View Guides →</a>
+      </div><!-- Community Events -->
+      <div class="card-hover bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 border-2 border-purple-100 section-fade">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Community Events</h3>
+         <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">Regular workshops and support groups</p>
+        </div>
+       </div>
+       <div class="space-y-2 text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <p>• Art therapy sessions</p>
+        <p>• Mindfulness workshops</p>
+        <p>• Peer support circles</p>
+       </div><a href="#events" class="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">See Events →</a>
+      </div><!-- School Partnerships -->
+      <div class="card-hover bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 border-2 border-amber-100 section-fade">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">School Partnerships</h3>
+         <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">On-campus programs and counselor collaboration</p>
+        </div>
+       </div>
+       <div class="space-y-2 text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">
+        <p>• In-school workshops</p>
+        <p>• Counselor resource sharing</p>
+        <p>• Student peer advocacy training</p>
+       </div><a href="#contact" class="inline-block mt-4 text-amber-600 hover:text-amber-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">Partner With Us →</a>
+      </div>
+     </div><!-- Impact Tracking Notice -->
+     <div class="mt-12 bg-blue-50 border-2 border-blue-200 rounded-2xl p-8 text-center section-fade">
+      <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+       <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+       </svg>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Impact Tracking Coming Soon</h3>
+      <p class="text-slate-600 max-w-2xl mx-auto mb-4" style="font-family: 'Crimson Pro', serif;">We're implementing anonymous tracking and surveys to measure which resources are most helpful and gather feedback. This will help us understand our impact and improve our programs.</p>
+      <p class="text-sm text-slate-500" style="font-family: 'Crimson Pro', serif;">All tracking will be anonymous and optional. Your privacy is our priority.</p>
+     </div>
+    </div>
+   </section><!-- ==================== RESOURCES/GUIDES SECTION ==================== -->
+   <section id="resources" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Free Resources</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Multilingual Guides</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">All resources available in multiple languages through Google Docs. Choose your language, read online, or download PDF.</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"><!-- Mental Health 101 -->
+      <div class="card-hover bg-white rounded-2xl p-6 border border-slate-200 section-fade">
+       <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+       </div>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Mental Health 101 for Immigrant Teens</h3>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Understanding stress, school anxiety, and navigating family expectations</p>
+       <div class="mb-4">
+        <p class="text-xs font-medium text-slate-500 mb-2" style="font-family: 'Outfit', sans-serif;">Available in:</p>
+        <div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">EN</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ES</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ZH</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">VI</span>
+        </div>
+       </div><button class="resource-access-btn w-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-medium py-2 rounded-lg transition-colors text-sm" data-resource="Mental Health 101 for Immigrant Teens" style="font-family: 'Outfit', sans-serif;">Access Guide</button>
+      </div><!-- Mindfulness Basics -->
+      <div class="card-hover bg-white rounded-2xl p-6 border border-slate-200 section-fade" style="animation-delay: 0.1s;">
+       <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+       </div>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Mindfulness Basics</h3>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Simple exercises for stress relief with journaling prompts, music suggestions, and ambient sounds</p>
+       <div class="mb-4">
+        <p class="text-xs font-medium text-slate-500 mb-2" style="font-family: 'Outfit', sans-serif;">Available in:</p>
+        <div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">EN</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ES</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ZH</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">VI</span>
+        </div>
+       </div><button class="resource-access-btn w-full bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-medium py-2 rounded-lg transition-colors text-sm" data-resource="Mindfulness Basics" style="font-family: 'Outfit', sans-serif;">Access Guide</button>
+      </div><!-- Self-Care Checklists -->
+      <div class="card-hover bg-white rounded-2xl p-6 border border-slate-200 section-fade" style="animation-delay: 0.2s;">
+       <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+       </div>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Self-Care Checklists</h3>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Daily and weekly checklists designed for teen mental wellness</p>
+       <div class="mb-4">
+        <p class="text-xs font-medium text-slate-500 mb-2" style="font-family: 'Outfit', sans-serif;">Available in:</p>
+        <div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">EN</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ES</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ZH</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">VI</span>
+        </div>
+       </div><button class="resource-access-btn w-full bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 font-medium py-2 rounded-lg transition-colors text-sm" data-resource="Self-Care Checklists" style="font-family: 'Outfit', sans-serif;">Access Guide</button>
+      </div><!-- Local Resources Directory -->
+      <div class="card-hover bg-white rounded-2xl p-6 border border-slate-200 section-fade" style="animation-delay: 0.3s;">
+       <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        </svg>
+       </div>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Local Resources Directory</h3>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Multilingual therapy and support services in your area</p>
+       <div class="mb-4">
+        <p class="text-xs font-medium text-slate-500 mb-2" style="font-family: 'Outfit', sans-serif;">Available in:</p>
+        <div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">EN</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ES</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">ZH</span> <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded" style="font-family: 'Outfit', sans-serif;">VI</span>
+        </div>
+       </div><button class="resource-access-btn w-full bg-slate-100 hover:bg-amber-50 text-slate-700 hover:text-amber-700 font-medium py-2 rounded-lg transition-colors text-sm" data-resource="Local Resources Directory" style="font-family: 'Outfit', sans-serif;">View Directory</button>
+      </div>
+     </div><!-- Featured Guide: Stress Decoder -->
+     <div class="bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-indigo-200 mb-12 section-fade">
+      <div class="flex items-start gap-6">
+       <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0 text-4xl">
+        🧠
+       </div>
+       <div class="flex-1">
+        <div class="flex items-center gap-2 mb-3"><span class="inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-semibold" style="font-family: 'Outfit', sans-serif;">Featured Interactive Guide</span>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-3" style="font-family: 'Outfit', sans-serif;">Stress Decoder: How Your Brain and Culture Mix 🧠🌏</h3>
+        <p class="text-slate-600 mb-4 leading-relaxed" style="font-family: 'Crimson Pro', serif;">A short, interactive guide that helps immigrant teens understand why they feel stressed, anxious, or pressured, linking science with cultural expectations.</p>
+        <div class="bg-white/70 rounded-xl p-4 mb-4">
+         <h4 class="font-semibold text-slate-800 mb-2 text-sm" style="font-family: 'Outfit', sans-serif;">What's Inside:</h4>
+         <ul class="space-y-2 text-sm text-slate-700" style="font-family: 'Crimson Pro', serif;">
+          <li class="flex items-start gap-2"><span class="text-indigo-600 font-bold">✓</span> <span>Quick "Why I feel this" charts for school, family, and social stress</span></li>
+          <li class="flex items-start gap-2"><span class="text-indigo-600 font-bold">✓</span> <span>Mini exercises to reframe stress without shaming yourself</span></li>
+          <li class="flex items-start gap-2"><span class="text-indigo-600 font-bold">✓</span> <span>Tips to talk to parents in ways that make sense across languages and cultures</span></li>
+          <li class="flex items-start gap-2"><span class="text-indigo-600 font-bold">✓</span> <span>Self-check questions at the end so teens can reflect and take action</span></li>
+         </ul>
+        </div>
+        <div class="flex flex-wrap items-center gap-4"><button class="resource-access-btn bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/30" data-resource="Stress Decoder: How Your Brain and Culture Mix" style="font-family: 'Outfit', sans-serif;"> Start Interactive Guide </button>
+         <div class="flex items-center gap-2 text-sm text-slate-600">
+          <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+          </svg><span style="font-family: 'Outfit', sans-serif;">Available in EN, ES, ZH, VI</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Google Doc Instructions Modal -->
+     <div id="resource-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl">
+       <div class="flex items-start justify-between mb-6">
+        <div>
+         <h3 id="modal-resource-title" class="text-2xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Access Resource</h3>
+         <p class="text-slate-600 text-sm" style="font-family: 'Crimson Pro', serif;">Choose your language to view the guide</p>
+        </div><button id="close-modal" class="text-slate-400 hover:text-slate-600 transition-colors">
+         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+         </svg></button>
+       </div>
+       <div class="space-y-4 mb-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3"><button class="language-select-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-lang="EN" style="font-family: 'Outfit', sans-serif;">English</button> <button class="language-select-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-lang="ES" style="font-family: 'Outfit', sans-serif;">Español</button> <button class="language-select-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-lang="ZH" style="font-family: 'Outfit', sans-serif;">中文</button> <button class="language-select-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-lang="VI" style="font-family: 'Outfit', sans-serif;">Tiếng Việt</button>
+        </div>
+       </div>
+       <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+        <h4 class="font-semibold text-blue-900 mb-2 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg> How to Use</h4>
+        <ol class="text-sm text-blue-800 space-y-2" style="font-family: 'Crimson Pro', serif;">
+         <li>1. Select your preferred language above</li>
+         <li>2. You'll be taken to a Google Doc in that language</li>
+         <li>3. Read online or go to File → Download → PDF to save a copy</li>
+         <li>4. All resources are free and no sign-in required</li>
+        </ol>
+       </div>
+       <div class="text-center"><button id="open-google-doc" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition-all shadow-lg" style="font-family: 'Outfit', sans-serif;">Open Google Doc</button>
+       </div>
+      </div>
+     </div><!-- Sliding Scale Donation for Guides -->
+     <div class="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border-2 border-emerald-100 section-fade">
+      <h3 class="text-2xl font-bold text-slate-800 mb-4 text-center" style="font-family: 'Outfit', sans-serif;">Support Our Free Guides (Optional)</h3>
+      <p class="text-center text-slate-600 mb-6 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">All guides remain free forever. If you find them helpful and are able to contribute, your donation helps us translate more resources and expand language support.</p>
+      <div class="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto"><button class="guide-amount-btn border-2 border-slate-200 hover:border-emerald-500 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-semibold py-3 rounded-lg transition-all" data-amount="5" style="font-family: 'Outfit', sans-serif;">$5</button> <button class="guide-amount-btn border-2 border-slate-200 hover:border-emerald-500 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-semibold py-3 rounded-lg transition-all" data-amount="10" style="font-family: 'Outfit', sans-serif;">$10</button> <button class="guide-amount-btn border-2 border-slate-200 hover:border-emerald-500 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-semibold py-3 rounded-lg transition-all" data-amount="20" style="font-family: 'Outfit', sans-serif;">$20</button>
+      </div>
+      <div class="max-w-md mx-auto mt-4"><input type="number" id="guide-custom-amount" min="1" placeholder="Or enter custom amount" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" style="font-family: 'Outfit', sans-serif;">
+      </div>
+      <div class="text-center mt-4"><button id="guide-donate-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-xl transition-all shadow-lg" style="font-family: 'Outfit', sans-serif;">Support Translation Work</button>
+      </div>
+     </div><!-- Crisis Resources -->
+     <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl p-6 border border-red-100 section-fade mt-8">
+      <div class="flex items-start gap-4">
+       <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-bold text-red-800 mb-2 text-sm" style="font-family: 'Outfit', sans-serif;">Crisis Support Available 24/7</h4>
+        <div class="grid sm:grid-cols-2 gap-3 text-sm">
+         <div><span class="font-semibold text-slate-800" style="font-family: 'Outfit', sans-serif;">National Suicide Prevention:</span> <span class="text-red-600 font-bold ml-2" style="font-family: 'Outfit', sans-serif;">988</span>
+         </div>
+         <div><span class="font-semibold text-slate-800" style="font-family: 'Outfit', sans-serif;">Crisis Text Line:</span> <span class="text-red-600 font-bold ml-2" style="font-family: 'Outfit', sans-serif;">HOME to 741741</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== EVENTS SECTION ==================== -->
+   <section id="events" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Community Events</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Workshops &amp; Support Groups</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Building trust and awareness—these events help families feel comfortable before entering the EchoBridge Program</p>
+     </div><!-- Event Categories -->
+     <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <div class="card-hover bg-gradient-to-br from-blue-50 to-white rounded-xl p-6 border border-blue-100 section-fade"><span class="text-3xl mb-3 block">🎨</span>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Art Therapy Sessions</h3>
+       <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Creative expression workshops that help teens process emotions through art</p>
+       <div class="text-xs text-blue-600 font-medium" style="font-family: 'Outfit', sans-serif;">
+        Monthly • Free admission
+       </div>
+      </div>
+      <div class="card-hover bg-gradient-to-br from-emerald-50 to-white rounded-xl p-6 border border-emerald-100 section-fade" style="animation-delay: 0.1s;"><span class="text-3xl mb-3 block">🧘</span>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Mindfulness Workshops</h3>
+       <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Guided meditation and breathing exercises for stress management</p>
+       <div class="text-xs text-emerald-600 font-medium" style="font-family: 'Outfit', sans-serif;">
+        Bi-weekly • Drop-in welcome
+       </div>
+      </div>
+      <div class="card-hover bg-gradient-to-br from-purple-50 to-white rounded-xl p-6 border border-purple-100 section-fade" style="animation-delay: 0.2s;"><span class="text-3xl mb-3 block">💬</span>
+       <h3 class="font-semibold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Peer Support Circles</h3>
+       <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Safe spaces for teens to share experiences with trained facilitators</p>
+       <div class="text-xs text-purple-600 font-medium" style="font-family: 'Outfit', sans-serif;">
+        Weekly • Confidential
+       </div>
+      </div>
+     </div><!-- Upcoming Events -->
+     <div class="bg-slate-50 rounded-2xl p-8 section-fade">
+      <h3 class="text-xl font-bold text-slate-800 mb-6" style="font-family: 'Outfit', sans-serif;">Upcoming Events</h3>
+      <div class="space-y-6"><!-- Event 1: Art Therapy -->
+       <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-200 transition-all">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-16 bg-blue-600 text-white rounded-lg flex flex-col items-center justify-center py-2 flex-shrink-0"><span class="text-xs font-medium" style="font-family: 'Outfit', sans-serif;">OCT</span> <span class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">28</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Art Therapy: "Expressing Home"</h4>
+          <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Create art that represents your cultural identity and journey</p>
+          <div class="flex items-center gap-2 text-xs text-slate-500 mb-4">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+           </svg><span>Public Library, Main Branch</span> <span class="mx-1">•</span> <span>3:00 PM - 5:00 PM</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3"><button class="event-rsvp-btn bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm hover:shadow-md" style="font-family: 'Outfit', sans-serif;">Join This Event</button> <a href="#echobridge" class="inline-flex items-center justify-center gap-1.5 text-blue-600 hover:text-blue-700 text-xs font-medium px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors" style="font-family: 'Outfit', sans-serif;"> <span>Enjoyed our events? Learn about EchoBridge</span> <span>🌉</span> </a>
+          </div>
+         </div>
+        </div>
+       </div><!-- Event 2: Parent-Teen Workshop -->
+       <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-200 transition-all">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-16 bg-emerald-600 text-white rounded-lg flex flex-col items-center justify-center py-2 flex-shrink-0"><span class="text-xs font-medium" style="font-family: 'Outfit', sans-serif;">NOV</span> <span class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">05</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Parent-Teen Workshop</h4>
+          <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Communication strategies for immigrant families (gateway to EchoBridge)</p>
+          <div class="flex items-center gap-2 text-xs text-slate-500 mb-4">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+           </svg><span>Virtual via Zoom</span> <span class="mx-1">•</span> <span>6:30 PM - 8:00 PM</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3"><button class="event-rsvp-btn bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm hover:shadow-md" style="font-family: 'Outfit', sans-serif;">Join This Event</button> <a href="#echobridge" class="inline-flex items-center justify-center gap-1.5 text-emerald-600 hover:text-emerald-700 text-xs font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" style="font-family: 'Outfit', sans-serif;"> <span>Ready for deeper conversations? Try EchoBridge</span> <span>🌉</span> </a>
+          </div>
+         </div>
+        </div>
+       </div><!-- Event 3: Mindfulness Workshop -->
+       <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-purple-200 transition-all">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-16 bg-purple-600 text-white rounded-lg flex flex-col items-center justify-center py-2 flex-shrink-0"><span class="text-xs font-medium" style="font-family: 'Outfit', sans-serif;">NOV</span> <span class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">12</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Mindfulness &amp; Meditation</h4>
+          <p class="text-sm text-slate-600 mb-3" style="font-family: 'Crimson Pro', serif;">Guided breathing exercises and stress management techniques</p>
+          <div class="flex items-center gap-2 text-xs text-slate-500 mb-4">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+           </svg><span>Community Center, Room 203</span> <span class="mx-1">•</span> <span>4:00 PM - 5:30 PM</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3"><button class="event-rsvp-btn bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm hover:shadow-md" style="font-family: 'Outfit', sans-serif;">Join This Event</button> <a href="#echobridge" class="inline-flex items-center justify-center gap-1.5 text-purple-600 hover:text-purple-700 text-xs font-medium px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors" style="font-family: 'Outfit', sans-serif;"> <span>Want to talk with family? Explore EchoBridge</span> <span>🌉</span> </a>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Connection to EchoBridge -->
+     <div class="mt-8 bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-r-xl section-fade">
+      <div class="flex items-start gap-3"><span class="text-2xl flex-shrink-0">🌉</span>
+       <div>
+        <h4 class="font-semibold text-indigo-900 mb-1" style="font-family: 'Outfit', sans-serif;">Events Feed Into EchoBridge</h4>
+        <p class="text-indigo-800 text-sm" style="font-family: 'Crimson Pro', serif;">These community events serve as trust-building steps. Families who attend events often feel more comfortable enrolling in the EchoBridge Program when they're ready for deeper family conversations. Take your time—there's no rush to join the program.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== GROWTH/METRICS SECTION ==================== -->
+   <section id="growth" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Our Journey</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Growing Together, Year Over Year</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">We're just getting started. Here's a snapshot of where we're heading.</p>
+     </div><!-- 2026 Placeholder Only -->
+     <div class="max-w-md mx-auto">
+      <div class="card-hover bg-gradient-to-br from-blue-100 to-white rounded-2xl p-8 border-2 border-blue-300 section-fade">
+       <div class="text-sm font-semibold text-blue-600 mb-4" style="font-family: 'Outfit', sans-serif;">
+        2026 - Our Goal
+       </div>
+       <div class="space-y-4">
+        <div>
+         <div class="text-3xl font-bold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+          ?
+         </div>
+         <div class="text-sm text-slate-600" style="font-family: 'Outfit', sans-serif;">
+          Families We Hope to Serve
+         </div>
+        </div>
+        <div>
+         <div class="text-3xl font-bold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+          ?
+         </div>
+         <div class="text-sm text-slate-600" style="font-family: 'Outfit', sans-serif;">
+          Workshops &amp; Events
+         </div>
+        </div>
+        <div>
+         <div class="text-3xl font-bold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+          ?
+         </div>
+         <div class="text-sm text-slate-600" style="font-family: 'Outfit', sans-serif;">
+          Languages Supported
+         </div>
+        </div>
+        <div class="pt-4 border-t border-slate-200">
+         <p class="text-xs text-slate-500" style="font-family: 'Crimson Pro', serif;">We're tracking impact as we grow. Real numbers will be shared as we collect data responsibly.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== SPONSORS SECTION ==================== -->
+   <section id="sponsors" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Our Partners</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Sponsors &amp; Community Partners</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Organizations and community groups that support our mission</p>
+     </div><!-- Sponsor Logos Bar -->
+     <div class="bg-slate-50 rounded-2xl p-8 md:p-12 section-fade">
+      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12"><!-- Placeholder logos -->
+       <div class="w-32 h-16 bg-slate-200 rounded-lg flex items-center justify-center"><span class="text-slate-400 text-xs font-medium" style="font-family: 'Outfit', sans-serif;">Partner Logo</span>
+       </div>
+       <div class="w-32 h-16 bg-slate-200 rounded-lg flex items-center justify-center"><span class="text-slate-400 text-xs font-medium" style="font-family: 'Outfit', sans-serif;">Partner Logo</span>
+       </div>
+       <div class="w-32 h-16 bg-slate-200 rounded-lg flex items-center justify-center"><span class="text-slate-400 text-xs font-medium" style="font-family: 'Outfit', sans-serif;">Partner Logo</span>
+       </div>
+       <div class="w-32 h-16 bg-slate-200 rounded-lg flex items-center justify-center"><span class="text-slate-400 text-xs font-medium" style="font-family: 'Outfit', sans-serif;">Partner Logo</span>
+       </div>
+       <div class="w-32 h-16 bg-slate-200 rounded-lg flex items-center justify-center"><span class="text-slate-400 text-xs font-medium" style="font-family: 'Outfit', sans-serif;">Partner Logo</span>
+       </div>
+      </div>
+      <p class="text-center text-sm text-slate-500 mt-8" style="font-family: 'Crimson Pro', serif;">Partnership logos will be displayed here as we grow our network.</p>
+     </div><!-- Become a Partner CTA -->
+     <div class="mt-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white section-fade">
+      <h3 class="text-2xl font-bold mb-3" style="font-family: 'Outfit', sans-serif;">Partner With Us</h3>
+      <p class="mb-6 opacity-90 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">Schools, community centers, and organizations: let's work together to bring mental health support to immigrant families.</p><a href="#contact" class="inline-block bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3 rounded-xl transition-all" style="font-family: 'Outfit', sans-serif;"> Get in Touch </a>
+     </div>
+    </div>
+   </section><!-- ==================== DONATION/SUPPORT SECTION ==================== -->
+   <section id="donate" class="py-20 bg-gradient-to-br from-blue-50 via-white to-slate-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Support Our Mission</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Help Us Sustain EchoMinds</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto" style="font-family: 'Crimson Pro', serif;">EchoBridge and all resources remain free. Donations from those who can contribute help us expand language support and reach more communities.</p>
+     </div><!-- Sliding Scale Info -->
+     <div class="bg-white rounded-2xl p-8 shadow-sm mb-8 section-fade">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <div class="flex-1">
+        <h3 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif;">Sliding Scale Donation</h3>
+        <p class="text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">We operate on a <strong>pay-what-you-can model</strong>. All resources remain free regardless of donation. If your family is able to contribute, it helps us translate more materials, train facilitators, and reach more communities.</p>
+        <div class="grid sm:grid-cols-3 gap-4 text-sm">
+         <div class="bg-slate-50 p-4 rounded-lg">
+          <div class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+           Basic Support
+          </div>
+          <div class="text-2xl font-bold text-blue-600 mb-1" style="font-family: 'Outfit', sans-serif;">
+           $10
+          </div>
+          <p class="text-slate-600 text-xs" style="font-family: 'Crimson Pro', serif;">Covers translation costs for one guide</p>
+         </div>
+         <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+           Sustaining Support
+          </div>
+          <div class="text-2xl font-bold text-blue-600 mb-1" style="font-family: 'Outfit', sans-serif;">
+           $25
+          </div>
+          <p class="text-slate-600 text-xs" style="font-family: 'Crimson Pro', serif;">Supports one family's EchoBridge journey</p>
+         </div>
+         <div class="bg-slate-50 p-4 rounded-lg">
+          <div class="font-semibold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">
+           Leadership Circle
+          </div>
+          <div class="text-2xl font-bold text-blue-600 mb-1" style="font-family: 'Outfit', sans-serif;">
+           $50+
+          </div>
+          <p class="text-slate-600 text-xs" style="font-family: 'Crimson Pro', serif;">Funds facilitator training &amp; workshops</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Payment Form -->
+     <div class="bg-white rounded-2xl p-8 shadow-sm section-fade">
+      <form id="donation-form" class="space-y-6"><!-- Donation Amount -->
+       <div><label for="donation-amount" class="block text-sm font-medium text-slate-700 mb-3" style="font-family: 'Outfit', sans-serif;">Choose Your Contribution Amount</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3"><button type="button" class="amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="10" style="font-family: 'Outfit', sans-serif;">$10</button> <button type="button" class="amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="25" style="font-family: 'Outfit', sans-serif;">$25</button> <button type="button" class="amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="50" style="font-family: 'Outfit', sans-serif;">$50</button> <button type="button" class="amount-btn border-2 border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold py-3 rounded-lg transition-all" data-amount="100" style="font-family: 'Outfit', sans-serif;">$100</button>
+        </div>
+        <div class="flex items-center gap-2"><span class="text-slate-600 text-sm" style="font-family: 'Outfit', sans-serif;">$</span> <input type="number" id="donation-amount" min="1" step="1" placeholder="Enter custom amount" class="flex-1 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+       </div><!-- Donor Information -->
+       <div class="grid sm:grid-cols-2 gap-6">
+        <div><label for="donor-name" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Name (Optional)</label> <input type="text" id="donor-name" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+        <div><label for="donor-email" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Email <span class="text-red-500">*</span></label> <input type="email" id="donor-email" required class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+       </div><!-- Payment Method Selection -->
+       <div><label class="block text-sm font-medium text-slate-700 mb-3" style="font-family: 'Outfit', sans-serif;">Payment Method</label>
+        <div class="grid sm:grid-cols-2 gap-4"><button type="button" id="stripe-btn" class="payment-method-btn border-2 border-blue-500 bg-blue-50 flex items-center justify-center gap-3 py-4 rounded-xl transition-all">
+          <svg class="w-12 h-5" viewbox="0 0 60 25" fill="none"><rect width="60" height="25" rx="4" fill="#635BFF" /> <path d="M13 11.5c0-.8-.5-1.2-1.4-1.2-.9 0-1.5.4-1.5.4v6.1s.6.4 1.5.4c1.5 0 1.4-1.2 1.4-2v-3.7zm2.5 3.8c0 2.4-1.2 4-3.9 4-1.2 0-2.1-.5-2.1-.5v4.7h-2.5V8h2.5v.5s.9-.5 2.1-.5c2.7 0 3.9 1.6 3.9 4v3.3z" fill="white" /> <path d="M21.5 15.5c0 1.2-.9 2.1-2.1 2.1-1.2 0-2.1-.9-2.1-2.1v-5.4h-2.5v5.4c0 2.6 1.8 4.6 4.6 4.6s4.6-2 4.6-4.6v-5.4h-2.5v5.4z" fill="white" />
+          </svg><span class="font-semibold text-slate-700" style="font-family: 'Outfit', sans-serif;">Stripe</span> </button> <button type="button" id="paypal-btn" class="payment-method-btn border-2 border-slate-200 bg-white flex items-center justify-center gap-3 py-4 rounded-xl transition-all hover:border-blue-500">
+          <svg class="w-20 h-6" viewbox="0 0 100 32" fill="none"><path d="M12 4h10c6 0 9 3 8 9-1 6-5 9-10 9h-4l-2 10H8L12 4z" fill="#003087" /> <path d="M12 4h10c6 0 9 3 8 9-1 6-5 9-10 9h-4l-2 10H8L12 4z" fill="#009CDE" opacity="0.7" />
+          </svg><span class="font-semibold text-slate-700" style="font-family: 'Outfit', sans-serif;">PayPal</span> </button>
+        </div>
+       </div><!-- Card Details (Stripe) -->
+       <div id="stripe-details" class="space-y-4">
+        <div><label for="card-number" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Card Number <span class="text-red-500">*</span></label> <input type="text" id="card-number" required placeholder="1234 5678 9012 3456" maxlength="19" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+         <div><label for="expiry-date" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Expiry Date <span class="text-red-500">*</span></label> <input type="text" id="expiry-date" required placeholder="MM / YY" maxlength="7" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+         </div>
+         <div><label for="cvc" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">CVC <span class="text-red-500">*</span></label> <input type="text" id="cvc" required placeholder="123" maxlength="4" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+         </div>
+        </div>
+       </div><!-- PayPal Message -->
+       <div id="paypal-details" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
+        <svg class="w-12 h-12 text-blue-600 mx-auto mb-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-slate-700 font-medium mb-2" style="font-family: 'Outfit', sans-serif;">You'll be redirected to PayPal</p>
+        <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">After clicking "Complete Donation", you'll be taken to PayPal's secure checkout to complete your contribution.</p>
+       </div><!-- Submit Button --> <button type="submit" id="submit-donation" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50" style="font-family: 'Outfit', sans-serif;"> Complete Donation </button> <!-- Privacy Note -->
+       <p class="text-xs text-center text-slate-500" style="font-family: 'Crimson Pro', serif;">🔒 Your payment information is secure and encrypted. We never store your card details.</p>
+      </form><!-- Success Message -->
+      <div id="donation-success" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-8 text-center">
+       <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+       </div>
+       <h4 class="text-2xl font-bold text-emerald-800 mb-2" style="font-family: 'Outfit', sans-serif;">Thank You! 💙</h4>
+       <p class="text-slate-700 mb-4" style="font-family: 'Crimson Pro', serif;">Your donation helps us bring culturally adapted mental health resources to families who need them most.</p>
+       <p class="text-sm text-slate-600" style="font-family: 'Crimson Pro', serif;">A confirmation email has been sent to your inbox.</p>
+      </div>
+     </div><!-- Alternative Ways to Support -->
+     <div class="mt-8 grid md:grid-cols-2 gap-6 section-fade">
+      <div class="bg-white rounded-xl p-6 border border-slate-200">
+       <h4 class="font-semibold text-slate-800 mb-3 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
+        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg> Volunteer Your Skills</h4>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Help with translation, facilitation, or outreach in your community.</p><a href="#contact" class="text-blue-600 hover:text-blue-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">Learn More →</a>
+      </div>
+      <div class="bg-white rounded-xl p-6 border border-slate-200">
+       <h4 class="font-semibold text-slate-800 mb-3 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
+        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg> Share Our Resources</h4>
+       <p class="text-sm text-slate-600 mb-4" style="font-family: 'Crimson Pro', serif;">Spread the word about EchoMinds in your school or community.</p><button class="text-blue-600 hover:text-blue-700 font-medium text-sm" style="font-family: 'Outfit', sans-serif;">Share →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- ==================== CONTACT SECTION ==================== -->
+   <section id="contact" class="py-20 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12 section-fade"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">Get in Touch</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4" style="font-family: 'Outfit', sans-serif;">Contact Us</h2>
+      <p class="text-lg text-slate-600" style="font-family: 'Crimson Pro', serif;">Questions? Want to bring EchoBridge to your school? Reach out.</p>
+     </div>
+     <div class="bg-white rounded-2xl p-8 shadow-sm section-fade">
+      <form id="contact-form" class="space-y-6">
+       <div class="grid md:grid-cols-2 gap-6">
+        <div><label for="name" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Name</label> <input type="text" id="name" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+        <div><label for="email" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Email <span class="text-red-500">*</span></label> <input type="email" id="email" required class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" style="font-family: 'Outfit', sans-serif;">
+        </div>
+       </div>
+       <div><label for="message" class="block text-sm font-medium text-slate-700 mb-2" style="font-family: 'Outfit', sans-serif;">Message <span class="text-red-500">*</span></label> <textarea id="message" required rows="4" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" style="font-family: 'Outfit', sans-serif;"></textarea>
+       </div><button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-blue-600/30" style="font-family: 'Outfit', sans-serif;"> Send Message </button>
+      </form>
+      <div id="form-success" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-6 text-center mt-6">
+       <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+       </div>
+       <h4 class="font-semibold text-blue-800 mb-1" style="font-family: 'Outfit', sans-serif;">Message Sent!</h4>
+       <p class="text-sm text-blue-700" style="font-family: 'Crimson Pro', serif;">We'll get back to you within 48 hours.</p>
+      </div>
+     </div><!-- Volunteer CTA -->
+     <div class="mt-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white section-fade">
+      <h3 class="text-2xl font-bold mb-3" style="font-family: 'Outfit', sans-serif;">Join Our Team</h3>
+      <p class="mb-6 opacity-90" style="font-family: 'Crimson Pro', serif;">Bilingual students passionate about mental health: we need your help translating, hosting events, and creating content.</p><button class="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3 rounded-xl transition-all" style="font-family: 'Outfit', sans-serif;"> Apply to Volunteer </button>
+     </div>
+    </div>
+   </section><!-- ==================== FOOTER ==================== -->
+   <footer class="bg-slate-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div class="md:col-span-2">
+       <div class="flex items-center gap-2 mb-4">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center">
+         <svg class="w-10 h-10" viewbox="0 0 100 100" fill="none"><path d="M30 50 Q30 25 50 25 Q70 25 70 50 L70 70 Q70 75 65 75 L35 75 Q30 75 30 70 Z" fill="#4FC3F7" /> <circle cx="50" cy="40" r="8" stroke="white" stroke-width="2" fill="none" opacity="0.8" />
+         </svg>
+        </div><span class="text-xl font-semibold tracking-tight" style="font-family: 'Outfit', sans-serif;">EchoMinds</span>
+       </div>
+       <p class="text-slate-400 text-sm max-w-sm mb-4" style="font-family: 'Crimson Pro', serif;">Breaking down barriers to mental health support for immigrant families.</p>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-3 text-sm" style="font-family: 'Outfit', sans-serif;">Quick Links</h4>
+       <ul class="space-y-2 text-sm">
+        <li><a href="#echobridge" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">EchoBridge Program</a></li>
+        <li><a href="#services" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">Services</a></li>
+        <li><a href="#resources" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">Guides</a></li>
+        <li><a href="#events" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">Events</a></li>
+        <li><a href="#sponsors" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">Sponsors</a></li>
+        <li><a href="#donate" class="text-slate-400 hover:text-white transition-colors" style="font-family: 'Outfit', sans-serif;">Support Us</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-3 text-sm" style="font-family: 'Outfit', sans-serif;">Emergency</h4>
+       <ul class="space-y-2 text-sm">
+        <li><span class="text-slate-400" style="font-family: 'Outfit', sans-serif;">Crisis Hotline: <a href="tel:988" class="text-red-400 hover:text-red-300 font-medium">988</a></span></li>
+        <li><span class="text-slate-400" style="font-family: 'Outfit', sans-serif;">Crisis Text: <span class="text-red-400 font-medium">HOME to 741741</span></span></li>
+        <li><a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="text-red-400 hover:text-red-300 font-medium transition-colors" style="font-family: 'Outfit', sans-serif;">Exit Site Quickly</a></li>
+       </ul>
+      </div>
+     </div>
+     <div class="border-t border-slate-700 pt-6 text-center text-sm text-slate-400">
+      <p style="font-family: 'Outfit', sans-serif;">© 2024 EchoMinds. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      hero_headline: 'Mental Health Support Without Barriers.',
+      hero_subtext: 'EchoMinds provides bilingual resources, peer advocacy, and safe spaces for immigrant families navigating life in a new country.',
+      program_description: 'A family-centered mental health program that guides immigrant teens and parents through their first mental health conversation using culturally adapted, multilingual tools.',
+      mission_title: 'Why We Started EchoMinds',
+      background_color: '#FFFFFF',
+      surface_color: '#E1F5FE',
+      text_color: '#455A64',
+      primary_action_color: '#0277BD',
+      secondary_action_color: '#607D8B',
+      font_family: 'Outfit',
+      font_size: 16
+    };
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const heroHeadline = document.getElementById('hero-headline');
+          const heroSubtext = document.getElementById('hero-subtext');
+          const programDesc = document.getElementById('program-description');
+          const missionTitle = document.getElementById('mission-title');
+          
+          if (heroHeadline) {
+            const headline = config.hero_headline || defaultConfig.hero_headline;
+            heroHeadline.innerHTML = headline.includes('Without') 
+              ? headline.replace('Without Barriers.', '<span class="gradient-text">Without Barriers.</span>')
+              : headline;
+          }
+          if (heroSubtext) heroSubtext.textContent = config.hero_subtext || defaultConfig.hero_subtext;
+          if (programDesc) programDesc.textContent = config.program_description || defaultConfig.program_description;
+          if (missionTitle) missionTitle.textContent = config.mission_title || defaultConfig.mission_title;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => window.elementSdk.setConfig({ background_color: v }) },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => window.elementSdk.setConfig({ surface_color: v }) },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => window.elementSdk.setConfig({ text_color: v }) },
+            { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => window.elementSdk.setConfig({ primary_action_color: v }) },
+            { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => window.elementSdk.setConfig({ secondary_action_color: v }) }
+          ],
+          borderables: [],
+          fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => window.elementSdk.setConfig({ font_family: v }) },
+          fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => window.elementSdk.setConfig({ font_size: v }) }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
+          ['hero_subtext', config.hero_subtext || defaultConfig.hero_subtext],
+          ['program_description', config.program_description || defaultConfig.program_description],
+          ['mission_title', config.mission_title || defaultConfig.mission_title]
+        ])
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // Resource access tracking
+    const resourceAccessBtns = document.querySelectorAll('.resource-access-btn');
+    const resourceModal = document.getElementById('resource-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalResourceTitle = document.getElementById('modal-resource-title');
+    const openGoogleDocBtn = document.getElementById('open-google-doc');
+    const languageSelectBtns = document.querySelectorAll('.language-select-btn');
+    
+    let selectedResource = '';
+    let selectedLanguage = '';
+
+    resourceAccessBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        selectedResource = this.getAttribute('data-resource');
+        modalResourceTitle.textContent = `Access ${selectedResource}`;
+        resourceModal.classList.remove('hidden');
+        
+        // Anonymous tracking (placeholder)
+        console.log('Resource accessed:', selectedResource);
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      resourceModal.classList.add('hidden');
+      selectedLanguage = '';
+      languageSelectBtns.forEach(btn => {
+        btn.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+        btn.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+      });
+    });
+
+    languageSelectBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        selectedLanguage = this.getAttribute('data-lang');
+        
+        languageSelectBtns.forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+          b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+        });
+        
+        this.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        this.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+      });
+    });
+
+    openGoogleDocBtn.addEventListener('click', () => {
+      if (!selectedLanguage) {
+        showToast('Please select a language first');
+        return;
+      }
+      
+      // Anonymous tracking (placeholder)
+      console.log('Opening Google Doc:', selectedResource, selectedLanguage);
+      
+      // In production, this would open actual Google Doc links
+      showToast(`Opening ${selectedResource} in ${selectedLanguage}...`);
+      
+      // Simulated Google Doc URL
+      const mockUrl = `https://docs.google.com/document/example-${selectedResource}-${selectedLanguage}`;
+      window.open(mockUrl, '_blank', 'noopener,noreferrer');
+      
+      resourceModal.classList.add('hidden');
+    });
+
+    // Event RSVP handling
+    const eventRsvpBtns = document.querySelectorAll('.event-rsvp-btn');
+    eventRsvpBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const originalText = this.textContent;
+        this.textContent = 'Sending...';
+        this.disabled = true;
+        this.classList.add('opacity-75', 'cursor-not-allowed');
+        
+        setTimeout(() => {
+          this.textContent = '✓ RSVP Sent!';
+          this.classList.remove('opacity-75', 'cursor-not-allowed');
+          this.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+          showToast('RSVP confirmed! Check your email for details.');
+          
+          setTimeout(() => {
+            this.textContent = originalText;
+            this.disabled = false;
+            this.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+          }, 2000);
+        }, 1500);
+      });
+    });
+
+    // Contact form handling
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.classList.add('hidden');
+      document.getElementById('form-success').classList.remove('hidden');
+    });
+
+    // Donation forms
+    const donationForm = document.getElementById('donation-form');
+    const donationAmountInput = document.getElementById('donation-amount');
+    const amountButtons = document.querySelectorAll('.amount-btn');
+    const stripeBtn = document.getElementById('stripe-btn');
+    const paypalBtn = document.getElementById('paypal-btn');
+    const stripeDetails = document.getElementById('stripe-details');
+    const paypalDetails = document.getElementById('paypal-details');
+    const cardNumberInput = document.getElementById('card-number');
+    const expiryInput = document.getElementById('expiry-date');
+    const cvcInput = document.getElementById('cvc');
+
+    let selectedPaymentMethod = 'stripe';
+
+    amountButtons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const amount = this.getAttribute('data-amount');
+        donationAmountInput.value = amount;
+        
+        amountButtons.forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+          b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+        });
+        
+        this.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        this.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+      });
+    });
+
+    stripeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      selectedPaymentMethod = 'stripe';
+      
+      stripeBtn.classList.remove('border-slate-200', 'bg-white');
+      stripeBtn.classList.add('border-blue-500', 'bg-blue-50');
+      paypalBtn.classList.remove('border-blue-500', 'bg-blue-50');
+      paypalBtn.classList.add('border-slate-200', 'bg-white');
+      
+      stripeDetails.classList.remove('hidden');
+      paypalDetails.classList.add('hidden');
+      
+      cardNumberInput.required = true;
+      expiryInput.required = true;
+      cvcInput.required = true;
+    });
+
+    paypalBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      selectedPaymentMethod = 'paypal';
+      
+      paypalBtn.classList.remove('border-slate-200', 'bg-white');
+      paypalBtn.classList.add('border-blue-500', 'bg-blue-50');
+      stripeBtn.classList.remove('border-blue-500', 'bg-blue-50');
+      stripeBtn.classList.add('border-slate-200', 'bg-white');
+      
+      stripeDetails.classList.add('hidden');
+      paypalDetails.classList.remove('hidden');
+      
+      cardNumberInput.required = false;
+      expiryInput.required = false;
+      cvcInput.required = false;
+    });
+
+    cardNumberInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+
+    expiryInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/\//g, '');
+      if (value.length >= 2) {
+        value = value.slice(0, 2) + ' / ' + value.slice(2, 4);
+      }
+      e.target.value = value;
+    });
+
+    donationForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const amount = donationAmountInput.value;
+      const email = document.getElementById('donor-email').value;
+      
+      if (!amount || amount < 1) {
+        showToast('Please enter a donation amount of at least $1');
+        return;
+      }
+      
+      if (!email) {
+        showToast('Please enter your email address');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submit-donation');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Processing...';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      
+      setTimeout(() => {
+        donationForm.classList.add('hidden');
+        document.getElementById('donation-success').classList.remove('hidden');
+        showToast('Thank you for your support!');
+      }, 2000);
+    });
+
+    // EchoBridge donation
+    const echobridgeAmountBtns = document.querySelectorAll('.echobridge-amount-btn');
+    const echobridgeCustomAmount = document.getElementById('echobridge-custom-amount');
+    const echobridgeDonateBtn = document.getElementById('echobridge-donate-btn');
+
+    echobridgeAmountBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const amount = this.getAttribute('data-amount');
+        echobridgeCustomAmount.value = amount;
+        
+        echobridgeAmountBtns.forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+          b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+        });
+        
+        this.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        this.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+      });
+    });
+
+    echobridgeDonateBtn.addEventListener('click', () => {
+      const amount = echobridgeCustomAmount.value;
+      if (!amount || amount < 1) {
+        showToast('Please enter a donation amount');
+        return;
+      }
+      window.location.href = '#donate';
+      setTimeout(() => {
+        donationAmountInput.value = amount;
+        showToast('Donation amount set! Complete the form below.');
+      }, 500);
+    });
+
+    // Guide donation
+    const guideAmountBtns = document.querySelectorAll('.guide-amount-btn');
+    const guideCustomAmount = document.getElementById('guide-custom-amount');
+    const guideDonateBtn = document.getElementById('guide-donate-btn');
+
+    guideAmountBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const amount = this.getAttribute('data-amount');
+        guideCustomAmount.value = amount;
+        
+        guideAmountBtns.forEach(b => {
+          b.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+          b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+        });
+        
+        this.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        this.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+      });
+    });
+
+    guideDonateBtn.addEventListener('click', () => {
+      const amount = guideCustomAmount.value;
+      if (!amount || amount < 1) {
+        showToast('Please enter a donation amount');
+        return;
+      }
+      window.location.href = '#donate';
+      setTimeout(() => {
+        donationAmountInput.value = amount;
+        showToast('Donation amount set! Complete the form below.');
+      }, 500);
+    });
+
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.section-fade').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bc8d635e762125d',t:'MTc2ODE4MDg4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
   `)
 })
 
