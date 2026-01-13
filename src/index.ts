@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 const app = express()
 
 // Home route - HTML
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.type('html').send(`
     <!doctype html>
     <html>
@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
     </html>
   `)
 })
-
-app.get('/about', function (req, res) {
+*/
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'components', 'about.htm'))
 })
 
